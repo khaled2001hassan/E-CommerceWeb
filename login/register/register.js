@@ -21,7 +21,7 @@ submitBtn.addEventListener("click", () => {
         createUserWithEmailAndPassword(auth, email.value, password.value).then((userCredential) => {
             const user = userCredential.user;
             console.log(user);
-            setDoc(doc(db, "users", user.uid), {
+            setDoc(doc(db, "users", user.email), {
                 fullName: fname.value,
 
             }).then((creation) => {

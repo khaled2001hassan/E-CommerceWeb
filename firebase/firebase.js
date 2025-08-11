@@ -5,13 +5,14 @@ import { getAuth } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth
 import { getFirestore } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBRUj8mBb2w7bGfusHJFnij-5e_nFLDuqc",
-  authDomain: "e-commerce-94018.firebaseapp.com",
-  projectId: "e-commerce-94018",
-  storageBucket: "e-commerce-94018.firebasestorage.app",
-  messagingSenderId: "1002906309519",
-  appId: "1:1002906309519:web:f8ef91ccce210aea24f1fa",
-  measurementId: "G-JV2W6PBEMF"
+  apiKey: "AIzaSyAaVIIjcgn-QVVLrOSiW1DswoQSxqB_xjY",
+  authDomain: "egytour-492d1.firebaseapp.com",
+  databaseURL: "https://egytour-492d1-default-rtdb.firebaseio.com",
+  projectId: "egytour-492d1",
+  storageBucket: "egytour-492d1.appspot.com",
+  messagingSenderId: "808330931692",
+  appId: "1:808330931692:web:6d906a0692b49e72ea24c9",
+  measurementId: "G-T2NRPV1JKE"
 };
 
 const app = initializeApp(firebaseConfig);
