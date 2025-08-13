@@ -3,6 +3,8 @@ import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.1.0/firebase
 
 import { getAuth } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+import { getDatabase } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-database.js";
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyAaVIIjcgn-QVVLrOSiW1DswoQSxqB_xjY",
@@ -18,7 +20,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 
-
 export const auth = getAuth(app);
-export const db = getFirestore(app);
+export const db = getDatabase(app);
+
 export { app, analytics };

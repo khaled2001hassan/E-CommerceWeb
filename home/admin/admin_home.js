@@ -1,5 +1,6 @@
 
 loadPage("add_product/add.html", "add_product/add.js")
+// loadPage("edit_product/edit.html", "edit_product/edit.js")
 
 document.addEventListener("DOMContentLoaded", function () {
     document.querySelectorAll(".sidenav a").forEach(link => {
@@ -15,13 +16,13 @@ document.addEventListener("DOMContentLoaded", function () {
                     this.classList.add("active")
                     break;
                 case "edit":
-                    loadPage("edit_product/edit.html")
+                    loadPage("edit_product/edit.html", "edit_product/edit.js")
                     // page = "edit_product/edit.html";
                     console.log("edit");
                     this.classList.add("active")
                     break;
                 case "out":
-                    loadPage("out_product/out_product.html", "add_product/add.js")
+                    loadPage("out_product/out_product.html", "out_product/out_product.js")
                     console.log("out");
                     this.classList.add("active")
                     break;
@@ -45,11 +46,11 @@ function loadPage(page, scriptPath) {
             const main = document.querySelector(".main");
             main.innerHTML = html;
             const oldScript = document.getElementById("dynamic-page-script");
-            oldScript.remove
+            oldScript.remove()
             if (scriptPath) {
                 const newScript = document.createElement("script");
-                newScript.type = "module"; // For ES modules
-                newScript.src = scriptPath + "?v=" + Date.now(); // Prevent caching
+                newScript.type = "module"; 
+                newScript.src = scriptPath + "?v=" + Date.now(); 
                 newScript.id = "dynamic-page-script";
                 document.body.appendChild(newScript);
                 console.log("New script added:", scriptPath);
