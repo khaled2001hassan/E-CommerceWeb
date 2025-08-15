@@ -36,15 +36,13 @@ addProductBtn.addEventListener("click", async (e) => {
         return 0
     } else {
 
-        try {
+try {
 
             const file = ProductImage.files[0]; 
             const imgRef = storageRef(storage, `products/${ProductCategory.value}/${file.name}`);
-
             await uploadBytes(imgRef, file);
             const imageUrl = await getDownloadURL(imgRef);
             console.log("Image URL:", imageUrl);
-
             console.log("data add success");
             const productData = {
                 category: ProductCategory.value,
@@ -54,9 +52,10 @@ addProductBtn.addEventListener("click", async (e) => {
                 quantity: parseInt(ProductQuantity.value),
                 image: imageUrl
             };
-            await set(dbRef(database, `products/${ProductCategory.value}/${ProductName.value}`), productData);
-            console.log("data add success");
-
+            let key = new Date().toISOString().replace(/[.#$\[\]/]/g, "-");
+            await set(dbRef(database, `products/${ProductCategory.value}/${key}`), productData);
+            alert("data add success");
+            
         }
         catch {
             console.log("data not added success");
