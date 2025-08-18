@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     this.classList.add("active")
                     break;
                 case "orders":
-                    loadPage("order_product/order_product.html")
+                    loadPage("order_product/order_product.html", "order_product/out_product.js")
                     console.log("order");
                     this.classList.add("active")
                     break;
@@ -38,7 +38,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
-
 function loadPage(page, scriptPath) {
     fetch(page)
         .then(res => res.text())
@@ -49,8 +48,8 @@ function loadPage(page, scriptPath) {
             oldScript.remove()
             if (scriptPath) {
                 const newScript = document.createElement("script");
-                newScript.type = "module"; 
-                newScript.src = scriptPath + "?v=" + Date.now(); 
+                newScript.type = "module";
+                newScript.src = scriptPath + "?v=" + Date.now();
                 newScript.id = "dynamic-page-script";
                 document.body.appendChild(newScript);
                 console.log("New script added:", scriptPath);

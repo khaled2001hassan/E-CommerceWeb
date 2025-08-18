@@ -1,4 +1,4 @@
-import { auth, db } from '../../firebase/firebase.js';
+import { auth, storedb as db } from '../../firebase/firebase.js';
 import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 import { doc, setDoc } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
@@ -29,7 +29,6 @@ submitBtn.addEventListener("click", () => {
                 window.location.href = "/login/login/login.html";
             }).catch((error) => {
                 console.log(error);
-
             })
         }).catch((error) => {
             const errorCode = error.code;
