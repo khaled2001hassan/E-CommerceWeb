@@ -27,12 +27,12 @@ document.addEventListener("DOMContentLoaded", function () {
                     this.classList.add("active")
                     break;
                 case "orders":
-                    loadPage("order_product/order_product.html", "order_product/out_product.js")
+                    loadPage("order_product/order_product.html", "order_product/order_product.js")
                     console.log("order");
                     this.classList.add("active")
                     break;
                 case "logout":
-                    console.log("Logging out...");
+                    window.location.replace("http://127.0.0.1:5500/login/login/login.html");
                     return;
             }
         });
