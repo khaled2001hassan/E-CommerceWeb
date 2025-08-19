@@ -25,6 +25,14 @@ var ProductPriceAlert = document.getElementById("ProductPriceAlert");
 var ProductQuantityAlert = document.getElementById("ProductQuantityAlert");
 var ProductImageAlert = document.getElementById("ProductImageAlert");
 //#endregion
+function showLoading() {
+    document.getElementById("loadingOverlay").style.display = "flex";
+}
+
+
+function hideLoading() {
+    document.getElementById("loadingOverlay").style.display = "none";
+}
 
 var adminID = "khaled2001hassan@gmail.com"
 const storage = getStorage(app)
@@ -35,7 +43,7 @@ addProductBtn.addEventListener("click", async (e) => {
     if (!isValid()) {
         return 0
     } else {
-
+showLoading()
 try {
 
             const file = ProductImage.files[0]; 
@@ -55,11 +63,12 @@ try {
             let key = new Date().toISOString().replace(/[.#$\[\]/]/g, "-");
             await set(dbRef(database, `products/${ProductCategory.value}/${key}`), productData);
             alert("data add success");
+            hideLoading()
             
         }
         catch {
             console.log("data not added success");
-
+            hideLoading()
         }
     }
 })

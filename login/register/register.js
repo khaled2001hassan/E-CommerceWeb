@@ -14,10 +14,20 @@ var passwordError = document.getElementById("passwordError")
 
 var submitBtn = document.getElementById("submitBtn")
 
+function showLoading() {
+    document.getElementById("loadingOverlay").style.display = "flex";
+}
+
+
+function hideLoading() {
+    document.getElementById("loadingOverlay").style.display = "none";
+}
+
 submitBtn.addEventListener("click", () => {
     if (!isValid()) {
         return 0;
     } else {
+        showLoading()
         createUserWithEmailAndPassword(auth, email.value, password.value).then((userCredential) => {
             const user = userCredential.user;
             console.log(user);
@@ -25,12 +35,15 @@ submitBtn.addEventListener("click", () => {
                 fullName: fname.value,
 
             }).then((creation) => {
+                hideLoading()
                 alert("user created ")
                 window.location.href = "/login/login/login.html";
             }).catch((error) => {
+                hideLoading()
                 console.log(error);
             })
         }).catch((error) => {
+            hideLoading()
             const errorCode = error.code;
             const errorMessage = error.message;
             alert(errorMessage)
