@@ -3,9 +3,12 @@ import { app, db } from '../../firebase/firebase.js';
 import { ref, get, child ,remove } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-database.js";
 import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-storage.js";
 import { update } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-database.js";
+
+var user = localStorage.getItem("userId");
+
 function getProductCategory(category) {
         
-        get(child(ref(db), `products/electronics`)).then((snapshot) => {
+        get(child(ref(db), `products/fashion`)).then((snapshot) => {
         
         menCaregoryone.innerHTML = ""
         let data = snapshot.val()
@@ -22,112 +25,20 @@ function getProductCategory(category) {
         console.error("Error getting data:", error);
         })
 }
+
         window.gotodetails=gotodetails
         getProductCategory()
-        var menCaregoryone =document.getElementById('menCaregoryone');
-        // const productData = [
-        // {
-        //         category: "Women's Fashion",
-        //         name: "hoodie",
-        //         description:"Sed do eiusmod tempor incididunt",
-        //         price:"$180.00",
-        //         quantity: "38",
-        //         image: "mob3.png"
-        // },
-        // {
-        //         category: "men clothing",
-        //         name: "hoodie",
-        //         description:"Sed do eiusmod tempor incididunt",
-        //         price:"$180.00",
-        //         quantity: "38",
-        //         image: "mob3.png"
-        // },
-        // {
-        //         category: "men clothing",
-        //         name: "hoodie",
-        //         description:"Sed do eiusmod tempor incididunt",
-        //         price:"$180.00",
-        //         quantity: "38",
-        //         image: "mob3.png"
-        // },{
-        //         category: "Women's Fashion",
-        //         name: "hoodie",
-        //         description:"Sed do eiusmod tempor incididunt",
-        //         price:"$180.00",
-        //         quantity: "38",
-        //         image: "mob3.png"
-        // },
-        // {
-        //         category: "men clothing",
-        //         name: "hoodie",
-        //         description:"Sed do eiusmod tempor incididunt",
-        //         price:"$180.00",
-        //         quantity: "38",
-        //         image: "mob3.png"
-        // },
-        // {
-        //         category: "men clothing",
-        //         name: "hoodie",
-        //         description:"Sed do eiusmod tempor incididunt",
-        //         price:"$180.00",
-        //         quantity: "38",
-        //         image: "mob3.png"
-        // },
-        // {
-        //         category: "Women's Fashion",
-        //         name: "hoodie",
-        //         description:"Sed do eiusmod tempor incididunt",
-        //         price:"$180.00",
-        //         quantity: "38",
-        //         image: "mob3.png"
-        // },
-        // {
-        //         category: "men clothing",
-        //         name: "hoodie",
-        //         description:"Sed do eiusmod tempor incididunt",
-        //         price:"$180.00",
-        //         quantity: "38",
-        //         image: "mob3.png"
-        // },
-        // {
-        //         category: "men clothing",
-        //         name: "hoodie",
-        //         description:"Sed do eiusmod tempor incididunt",
-        //         price:"$180.00",
-        //         quantity: "38",
-        //         image: "mob3.png"
-        // },
-        // {
-        //         category: "Women's Fashion",
-        //         name: "hoodie",
-        //         description:"Sed do eiusmod tempor incididunt",
-        //         price:"$180.00",
-        //         quantity: "38",
-        //         image: "mob3.png"
-        // },
-        // {
-        //         category: "men clothing",
-        //         name: "hoodie",
-        //         description:"Sed do eiusmod tempor incididunt",
-        //         price:"$180.00",
-        //         quantity: "38",
-        //         image: "mob3.png"
-        // },
-        // {
-        //         category: "men clothing",
-        //         name: "hoodie",
-        //         description:"Sed do eiusmod tempor incididunt",
-        //         price:"$180.00",
-        //         quantity: "38",
-        //         image: "mob3.png"
-        // },
-        
-        // ];
 
-        // for (let i = 0; i < productData.length; i++) {
-        // menCaregoryone.innerHTML+=add(productData[i]);
+        
+
+
+
+
+        var menCaregoryone =document.getElementById('menCaregoryone');
         function gotodetails(id,category) {
-                console.log(id,category)
+                console.log(user)
+
+                window.location.href=`../user/product-details/product-details.html?userId=${user}&productId=${id}&CatName=fashion`
         }
         function add (value,id){
                 var x = `<div class="col-6 col-xl-4">
@@ -137,7 +48,7 @@ function getProductCategory(category) {
                                 <img src="mob.jpg" class="hover-image img-fluid" alt="Product Variant">
                                 <div class="product-overlay">
                                 <div class="product-actions">
-                                <button onclick="gotodetails('${id}','${value.category}')" type="button" class="action-btn" data-bs-toggle="tooltip" title="Quick View">
+                                <button id="eyebutton"  onclick="gotodetails('${id}','${value.category}')" type="button" class="action-btn" data-bs-toggle="tooltip" title="Quick View">
                                         <i class="bi bi-eye"></i>
                                 </button>
                                 <button type="button" class="action-btn" data-bs-toggle="tooltip" title="Add to Cart">
@@ -163,3 +74,11 @@ function getProductCategory(category) {
         }
         // }
 
+
+        
+        document.addEventListener("DOMContentLoaded", () => {
+        const detailslink = document.getElementById("eyebutton");
+        if (detailslink && userId && id && category) {
+        detailslink.href = `../user/product-details/product-details.html?userId=${encodeURIComponent(userId )}&productId=${encodeURIComponent(id )}&CatName=${encodeURIComponent(category)}`;
+        }
+        });

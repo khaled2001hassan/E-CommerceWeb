@@ -1,74 +1,84 @@
-var bestSellerSection =document.getElementById('sale');
-const productData = [
-{
-    category: "men clothing",
-        name: "hoodie",
-        description:"Sed do eiusmod tempor incididunt",
-        price:"$180.00",
-        quantity: "38",
-        image: "assets/img/product/product-5.webp"
-},
-{
-    category: "men clothing",
-        name: "hoodie",
-        description:"Sed do eiusmod tempor incididunt",
-        price:"$180.00",
-        quantity: "38",
-        image: "assets/img/product/product-11.webp"
-},
-{
-    category: "men clothing",
-        name: "hoodie",
-        description:"Sed do eiusmod tempor incididunt",
-        price:"$180.00",
-        quantity: "38",
-        image: "assets/img/product/product-10.webp"
-},
-{
-    category: "men clothing",
-        name: "hoodie",
-        description:"Sed do eiusmod tempor incididunt",
-        price:"$180.00",
-        quantity: "38",
-        image: "assets/img/product/product-3.webp"
-}
-];
 
-for (let i = 0; i < productData.length; i++) {
-bestSellerSection.innerHTML+=add(productData[i]);
-function add (value){
-var x = `<div class="col-lg-3 col-md-6">
-        <div class="product-item">
-            <div class="product-image">
-            <img src=${value.image} alt="Product Image" class="img-fluid" loading="lazy">
-            <div class="product-actions">
-            </div>
-            <button class="cart-btn">Add to Cart</button>
-            </div>
-            <div class="product-info">
-            <div class="product-category">${value.category}</div>
-            <div class="product-category">${value.name}</div>
-            <h4 class="product-name"><a href="product-details.html">${value.description}</a></h4>
-            <span class="rating-count">Quantity : ${value.quantity}</span>
-            <div class="product-rating">
-                <div class="stars">
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-half"></i>
-                
-                </div>
-            </div>
-            <div class="product-price">
-                <span class="old-price">$240.00</span>
-                <span class="current-price">${value.price}</span>
-            </div>
+import { app, db } from '../../firebase/firebase.js';
+import { ref, get, child ,remove } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-database.js";
+import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-storage.js";
+import { update } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-database.js";
 
-            </div>
-        </div>
-        </div>`
-        return x
+var user = localStorage.getItem("userId");
+
+function getProductCategory(category) {
+        
+        get(child(ref(db), `products/fashion`)).then((snapshot) => {
+        
+        menCaregoryone.innerHTML = ""
+        let data = snapshot.val()
+        if (snapshot.exists()) {
+                Object.entries(data).forEach(([key, product]) => {
+                //هنا هتكتب الفانكشن الي بتجيب الداتا
+                menCaregoryone.innerHTML+=add(product,key);
+                });
+        } else {
+                menCaregoryone.innerHTML = ""
+        }
+        }).catch((error) => {
+        
+        console.error("Error getting data:", error);
+        })
 }
 
-}
+        window.gotodetails=gotodetails
+        getProductCategory()
+
+        
+
+
+
+
+        var menCaregoryone =document.getElementById('sale');
+        function gotodetails(id,category) {
+                console.log(user)
+
+                window.location.href=`../user/product-details/product-details.html?userId=${user}&productId=${id}&CatName=fashion`
+        }
+        function add (value,id){
+                var x = `<div class="col-6 col-xl-4">
+                        <div class="product-card" data-aos="zoom-in">
+                                <div class="product-image">
+                                <img src=${value.image} class="main-image img-fluid" alt="Product">
+                                <img src="mob.jpg" class="hover-image img-fluid" alt="Product Variant">
+                                <div class="product-overlay">
+                                <div class="product-actions">
+                                <button id="eyebutton"  onclick="gotodetails('${id}','${value.category}')" type="button" class="action-btn" data-bs-toggle="tooltip" title="Quick View">
+                                        <i class="bi bi-eye"></i>
+                                </button>
+                                <button type="button" class="action-btn" data-bs-toggle="tooltip" title="Add to Cart">
+                                        <i class="bi bi-cart-plus"></i>
+                                </button>
+                                </div>
+                                </div>
+                                </div>
+                                <div class="product-details">
+                                <div class="product-category">${value.category}</div>
+                                <h4 class="product-title"><a href="product-details.html">${value.name}</a></h4>
+                                <h6 class="product-title"><a href="product-details.html">${value.description}</a></h6>
+                                <div class="product-meta">
+                                <div class="product-price">${value.price}</div>
+                                <div class="product-rating">
+                                <i class="bi bi-bag-check-fill" style="color: black;"></i>${value.quantity}
+                                </div>
+                                </div>
+                                </div>
+                        </div>
+                        </div>`
+                return x
+        }
+        // }
+
+
+        
+        document.addEventListener("DOMContentLoaded", () => {
+        const detailslink = document.getElementById("eyebutton");
+        if (detailslink && userId && id && category) {
+        detailslink.href = `../user/product-details/product-details.html?userId=${encodeURIComponent(userId )}&productId=${encodeURIComponent(id )}&CatName=${encodeURIComponent(category)}`;
+        }
+        });
