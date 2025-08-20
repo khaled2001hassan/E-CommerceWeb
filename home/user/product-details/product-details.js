@@ -1,20 +1,40 @@
- import { app ,db } from 'http://127.0.0.1:5500/firebase/firebase.js';
+import { app, db } from 'http://127.0.0.1:5500/firebase/firebase.js';
 import {ref, child, get, push } 
 from "https://www.gstatic.com/firebasejs/12.1.0/firebase-database.js";
 import { onValue } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-database.js";
-
+import { getAuth, onAuthStateChanged } 
+from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+// import { doc, getDoc } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+// import { app, db } from 'http://127.0.0.1:5500/firebase/firebase.js';
+//import { ref, get, child ,remove } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-database.js";
+import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-storage.js";
+//import { update } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-database.js";
 const urlParams = new URLSearchParams(window.location.search);
-const productId = urlParams.get("productId");
-const CatName = urlParams.get("CatName");
-const userId = urlParams.get("userId");
+let productId = urlParams.get("productId");
+let CatName = urlParams.get("CatName");
+let userId = localStorage.getItem("userId");
 let cartRef = null;
+
+
+
 
 if (userId) {
   cartRef = ref(db, `carts/${userId}`);
 }
-
+// const auth = getAuth();
+// let userId = null;
+// onAuthStateChanged(auth, (user) => {
+//   if (user) {
+//     userId = user.uid;
+//     console.log("✅ Logged in as:", user.email, "UID:", userId);
+//   } else {
+//     userId = null;
+//     console.log("❌ No user logged in");
+//   }
+// });
+//let userId = "11-10-2001khaled";
 function listenToCartCount() {
-  if (!cartRef) return; //  اخرج لو مفيش userId
+  if (!cartRef) return; // ⛔ اخرج لو مفيش userId
 
   onValue(cartRef, (snapshot) => {
     if (snapshot.exists()) {
@@ -27,9 +47,9 @@ function listenToCartCount() {
   });
 }
 let currentProduct = null;
-get(child(ref(db), "products/mobiles/2025-08-16T10-00-00")).then((snapshot) => { 
-  console.log(snapshot.val());
-  })
+// get(child(ref(db), "products/mobiles/2025-08-16T10-00-00")).then((snapshot) => { 
+//   console.log(snapshot.val());
+//   })
 
 
 async function loadProduct() {
@@ -37,7 +57,7 @@ async function loadProduct() {
     alert("No product id provided");
     return;
   }
-
+//productId='2025-08-16T10-00-00';
   const dbRef = ref(db);
   const snapshot = await get(child(dbRef, `products/${CatName}/${productId}`));
 
@@ -61,7 +81,11 @@ async function loadProduct() {
   }
 }
 
-
+// document.addEventListener("DOMContentLoaded", () => {
+//   if (userId) {
+//     updateCartCount();
+//   }
+// });
 document.addEventListener("DOMContentLoaded", () => {
    listenToCartCount();
   loadProduct();
@@ -113,7 +137,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-  
+  // document.getElementById("buy-now").addEventListener("click", () => {
+  //   alert(`Proceeding to checkout with ${qtyInput.value} item(s).`);
+  // });
 });
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -129,3 +155,15 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
+// await set(dbRef(database, orders/${orderid}), order);
+//orders/orderid/
+// var order = {
+//     id : 1,
+//     customerName:"khaled hassan",
+//     customerID:"11-10-2001khaled",
+//     date:"15-8-2025",
+//     status:"paid",
+//     total:1500,
+//     quantity : 5,
+// address:"minya"
+// }
